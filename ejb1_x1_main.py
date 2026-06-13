@@ -48,9 +48,32 @@ el valor pasado como filtro y la oración tiene una longitud de la cadena de tex
 from util_package import text_manager 
 from util_package.text_manager import TEXT, is_newline, is_space, remove_punctuation_marks
 
+print(TEXT)
+is_newline(i)
+is_space
+
+  
+        
+print(palabra_actual)
+print(palabra_mas_larga)
+
 def find_largest_word(text):
-    # Write here your code
-    pass                
+    palabra_mas_larga = ''
+    palabra_actual = ''
+    for i in text:
+        if(is_newline(i) or is_space(i)):
+            palabra_actual = remove_punctuation_marks(palabra_actual)
+            
+            if(len(palabra_actual)>len(palabra_mas_larga)):
+                palabra_mas_larga = palabra_actual
+            palabra_actual = ''
+        else:
+            palabra_actual = f'{palabra_actual}{i}'
+
+    palabra_actual = remove_punctuation_marks(palabra_actual)
+    if len(palabra_actual) > len(palabra_mas_larga):
+        palabra_mas_larga = palabra_actual
+    return palabra_mas_larga     
 
 def is_palindrome_word(word):
     # Write here your code
