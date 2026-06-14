@@ -48,15 +48,6 @@ el valor pasado como filtro y la oración tiene una longitud de la cadena de tex
 from util_package import text_manager 
 from util_package.text_manager import TEXT, is_newline, is_space, remove_punctuation_marks
 
-print(TEXT)
-is_newline(i)
-is_space
-
-  
-        
-print(palabra_actual)
-print(palabra_mas_larga)
-
 def find_largest_word(text):
     palabra_mas_larga = ''
     palabra_actual = ''
@@ -76,10 +67,14 @@ def find_largest_word(text):
     return palabra_mas_larga     
 
 def is_palindrome_word(word):
-    # Write here your code
-    pass
-    
-
+    word = remove_punctuation_marks(word)
+    word = word.lower()
+    if(len(word)<= 1):
+        return True
+    if(word[0] == word[-1]):
+        return is_palindrome_word(word[1:-1])
+    else:
+        return False
 
 def count_palindrome_words(text):
     # Write here your code
@@ -92,10 +87,10 @@ def find_size_largest_sentence(text, filter):
 
 
 # Si quieres probar tu código, descomenta las siguientes líneas y ejecuta el script
-#print("La palabra mas larga es:", find_largest_word(TEXT))
-#print("'aa' es un palíndromo su resultado es:", is_palindrome_word("aa"))
-#print("'abx' no un palíndromo su resultado es:", is_palindrome_word("abx"))
-#print("'a' es un palíndromo su resultado es:", is_palindrome_word("a"))
-#print("'Ababa' es palíndromo su resultado es:", is_palindrome_word("Ababa"))
+print("La palabra mas larga es:", find_largest_word(TEXT))
+print("'aa' es un palíndromo su resultado es:", is_palindrome_word("aa"))
+print("'abx' no un palíndromo su resultado es:", is_palindrome_word("abx"))
+print("'a' es un palíndromo su resultado es:", is_palindrome_word("a"))
+print("'Ababa' es palíndromo su resultado es:", is_palindrome_word("Ababa"))
 #print("El número de palabras identificadas como palíndromos es:", count_palindrome_words(TEXT))
 #print("El tamaño de la oración más larga con el filtro='a', es :", find_size_largest_sentence(TEXT, "melon"))
