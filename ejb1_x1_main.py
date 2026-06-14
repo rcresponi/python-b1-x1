@@ -67,18 +67,52 @@ def find_largest_word(text):
     return palabra_mas_larga     
 
 def is_palindrome_word(word):
-    word = remove_punctuation_marks(word)
-    word = word.lower()
-    if(len(word)<= 1):
+    ''' 
+    Nota 1- Tras hacer varias pruebas, he detectado que ' ' es en sí mismo un palindromo según
+    la función definida inicialmente, entendiendo que en una palabra, un caracter debería ser una letra
+    como mínimo y por definición palindromo. Entonces, en una palabra, aviva o digamos anna, que al reducir
+    letras se queda en valor len 1 o 0, funciona, pero si lo que pasa es ' ' (o múltiples espacios),
+    se detecta valor = 1 y también da true, por lo tanto, hago un bucle previo para ver si por error
+    llegan espacios, limpio y valoro esa opción para devoler false y luego entrará la función de verdad
+    NOTA 2: '' también da erroneo pero no tengo como limpiar esto en la recursión, el mismo ejemplo
+    de Anna es el caso, primera prueba = true, segunda = true, tercera = '', si protego ese potencial input
+    dará falso, pero claramente debería dar true en este caso, pero no tengo como diferenciarlo aquí sin
+    hacer algo más avanzado, por parámetro adicional o algo así.
+    '''
+    word = remove_punctuation_marks(word).lower()
+    while '  ' in word:
+        word = word.replace('  ', ' ')
+    if word == ' ':
+        return False
+    '''
+    word = word.strip()
+    -->  aplicaría esta pero conceptualmente, entiendo que la palabra viene limpia sin espacios
+    '''
+    if len(word) <= 1:
         return True
-    if(word[0] == word[-1]):
+    if word[0] == word[-1]:
         return is_palindrome_word(word[1:-1])
     else:
         return False
 
 def count_palindrome_words(text):
-    # Write here your code
-    pass
+    palabra_actual = ''
+    x = 0
+    for i in text:
+        if(is_newline(i) or is_space(i)):
+            palabra_actual = remove_punctuation_marks(palabra_actual)
+            # Protegemos el potencial error detectado previamente bloqueando posible True del ''
+            if(palabra_actual != '' and is_palindrome_word(palabra_actual)):
+                x += 1
+            palabra_actual = ''
+        else:
+            palabra_actual = f'{palabra_actual}{i}'
+
+    palabra_actual = remove_punctuation_marks(palabra_actual)
+    if(palabra_actual != '' and is_palindrome_word(palabra_actual)):
+        x += 1
+    return x
+    
 
 
 def find_size_largest_sentence(text, filter):
@@ -92,5 +126,5 @@ print("'aa' es un palíndromo su resultado es:", is_palindrome_word("aa"))
 print("'abx' no un palíndromo su resultado es:", is_palindrome_word("abx"))
 print("'a' es un palíndromo su resultado es:", is_palindrome_word("a"))
 print("'Ababa' es palíndromo su resultado es:", is_palindrome_word("Ababa"))
-#print("El número de palabras identificadas como palíndromos es:", count_palindrome_words(TEXT))
+print("El número de palabras identificadas como palíndromos es:", count_palindrome_words(TEXT))
 #print("El tamaño de la oración más larga con el filtro='a', es :", find_size_largest_sentence(TEXT, "melon"))
